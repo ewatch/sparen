@@ -1,5 +1,6 @@
 package de.jan.banking.sparen.controller;
 
+import de.jan.banking.sparen.entity.AccountQueryEntity;
 import de.jan.banking.sparen.service.AccountQueryService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,10 @@ public class AccountQueryController {
     @GetMapping("/{accountNumber}/events")
     public List<Object> listEventsForAccount(@PathVariable(value = "accountNumber") final String accountNumber) {
         return this.accountQueryServiceImpl.listEventsForAccount(accountNumber);
+    }
+
+    @GetMapping("/{accountNumber}")
+    public AccountQueryEntity getAccount(@PathVariable(value = "accountNumber") final String accountNumber) {
+        return this.accountQueryServiceImpl.getAccount(accountNumber);
     }
 }

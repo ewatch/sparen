@@ -20,11 +20,7 @@ public class AccountAggregate {
     private String currency;
     private String status;
 
-    public AccountAggregate() {
-
-    }
-
-    @CommandHandler
+     @CommandHandler
     public AccountAggregate(final CreateAccountCommand createAccountCommand) {
         AggregateLifecycle.apply(new AccountCreatedEvent(createAccountCommand.id, createAccountCommand.accountBalance, createAccountCommand.currency));
     }
@@ -35,6 +31,8 @@ public class AccountAggregate {
         this.accountBalance = accountCreatedEvent.accountBalance;
         this.currency = accountCreatedEvent.currency;
         this.status = String.valueOf(Status.CREATED);
+
+        AggregateLifecycle.apply(new AccountActivatedEvent(this.id, Status.ACTIVATED));
     }
 
     @EventSourcingHandler
@@ -76,5 +74,41 @@ public class AccountAggregate {
     @EventSourcingHandler
     protected void on(AccountHeldEvent accountHeldEvent){
         this.status = String.valueOf(accountHeldEvent.status);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public AccountAggregate() {
+
     }
 }
