@@ -1,13 +1,13 @@
 package de.jan.banking.sparen.command;
 
-import org.axonframework.commandhandling.model.AggregateIdentifier;
+import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 public class BaseCommand<T> {
 
-    @AggregateIdentifier
+    @TargetAggregateIdentifier
     public final T id;
 
-    public BaseCommand(T id) {
+    BaseCommand(T id) {
         this.id = id;
     }
 }
